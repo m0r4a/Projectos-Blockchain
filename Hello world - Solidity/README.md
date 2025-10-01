@@ -110,6 +110,12 @@ Esto ejecuta automáticamente:
 2. Obtiene el saludo
 3. Muestra el nombre almacenado
 
+#### Muesta de cómo se vería
+
+<p align="center">
+    <img src="resources/demo_automático.png" alt="Showcase del demo"/>
+</p>
+
 ### 4. Interactuar manualmente
 
 **Exportar la dirección del contrato:**
