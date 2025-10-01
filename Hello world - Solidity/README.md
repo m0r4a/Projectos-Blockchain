@@ -25,7 +25,6 @@ forge --version
 ## Estructura relevante
 
 ```
-.
 ├── Makefile
 ├── README.md
 └── greet-contract/
@@ -72,7 +71,7 @@ make gas
 
 1. Levanta un nodo local
 
-**Terminal secundaria**
+**En una terminal secundaria**
 
 ```bash
 anvil
@@ -82,7 +81,7 @@ Esto inicia un nodo de desarrollo en `http://127.0.0.1:8545` con 10 cuentas prec
 
 2. Haz el deploy del contrato
 
-**Terminal principal**
+**En tu terminal principal**
 ```bash
 make deploy
 ```
