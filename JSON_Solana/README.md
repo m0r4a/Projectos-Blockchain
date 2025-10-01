@@ -8,6 +8,20 @@ Descarga bloques de la mainnet de Solana y los guarda en formato JSON.
 
 ## Instalación
 
+1. Clonar el repositorio
+
+```bash
+git clone https://github.com/m0r4a/Projectos-Blockchain.git
+```
+
+2. Entrar al projecto
+
+```bash
+cd Projectos-Blockchain/JSON_Solana
+```
+
+3. Instalar dependencias y compilar
+
 ```bash
 make setup
 ```
