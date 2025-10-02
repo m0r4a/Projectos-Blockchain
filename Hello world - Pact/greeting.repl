@@ -1,0 +1,63 @@
+(env-data 
+  { "ns-admin-keyset": ["admin-key"]
+  , "admin-keyset": ["admin-key"]
+  , "user1-keyset": ["user1-key"]
+  , "user2-keyset": ["user2-key"]
+  })
+(env-keys ["admin-key"])
+
+(begin-tx "Define namespace")
+(define-namespace 'free (read-keyset "ns-admin-keyset") (read-keyset "ns-admin-keyset"))
+(commit-tx)
+
+(begin-tx "Setup keysets")
+(namespace 'free)
+(define-keyset "free.admin-keyset" (read-keyset "admin-keyset"))
+(define-keyset "free.user1-keyset" (read-keyset "user1-keyset"))
+(define-keyset "free.user2-keyset" (read-keyset "user2-keyset"))
+(commit-tx)
+
+(begin-tx "Load module")
+(env-keys ["admin-key"])
+(namespace 'free)
+(load "greeting.pact")
+(create-table free.greeting.names-table)
+(commit-tx)
+
+(begin-tx "Test: Store name for user1")
+(env-keys ["user1-key"])
+(expect 
+  "Store name Astrid for user1"
+  "Name Astrid stored for account user1"
+  (free.greeting.store-name "user1" "Astrid" (read-keyset "user1-keyset")))
+(commit-tx)
+
+(begin-tx "Test: Greet user1")
+(expect 
+  "Greet returns correct greeting"
+  "Hola, Astrid!"
+  (free.greeting.greet "user1"))
+(commit-tx)
+
+(begin-tx "Test: Store name for user2")
+(env-keys ["user2-key"])
+(expect 
+  "Store name Bob for user2"
+  "Name Bob stored for account user2"
+  (free.greeting.store-name "user2" "Bob" (read-keyset "user2-keyset")))
+(commit-tx)
+
+(begin-tx "Test: Greet user2")
+(expect 
+  "Greet returns correct greeting for user2"
+  "Hola, Bob!"
+  (free.greeting.greet "user2"))
+(commit-tx)
+
+(begin-tx "Test: Cannot store empty name")
+(env-keys ["user1-key"])
+(expect-failure 
+  "Empty name should fail"
+  "Name cannot be empty"
+  (free.greeting.store-name "user3" "" (read-keyset "user1-keyset")))
+(commit-tx)
